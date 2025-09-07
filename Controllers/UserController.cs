@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services;
 using DTOs;
 
-namespace Controllers
+namespace cks_kaas.Controllers
 {
     [ApiController]
     [Route("api/tenants/{tenantId:guid}/users")]
@@ -18,14 +18,14 @@ namespace Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<IActionResult> ListUsers(Guid tenantId, [FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? search = null, [FromQuery] string? role = null)
         {
             var (users, total) = await _userService.ListUsersAsync(tenantId, page, pageSize, search, role);
             return Ok(new { data = new { users, total, page, pageSize } });
         }
 
-        [HttpGet("{id:guid}")]
+        [HttpGet("get/{id:guid}")]
         public async Task<IActionResult> GetUser(Guid tenantId, Guid id)
         {
             var user = await _userService.GetUserAsync(tenantId, id);
@@ -33,14 +33,14 @@ namespace Controllers
             return Ok(new { data = user });
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser(Guid tenantId, [FromBody] CreateUserDto dto)
         {
             var user = await _userService.CreateUserAsync(tenantId, dto);
             return Ok(new { data = user });
         }
 
-        [HttpPut("{id:guid}")]
+        [HttpPut("update/{id:guid}")]
         public async Task<IActionResult> UpdateUser(Guid tenantId, Guid id, [FromBody] UpdateUserDto dto)
         {
             var user = await _userService.UpdateUserAsync(tenantId, id, dto);
@@ -48,7 +48,7 @@ namespace Controllers
             return Ok(new { data = user });
         }
 
-        [HttpDelete("{id:guid}")]
+        [HttpDelete("delete/{id:guid}")]
         public async Task<IActionResult> DeleteUser(Guid tenantId, Guid id)
         {
             var result = await _userService.DeleteUserAsync(tenantId, id);
@@ -56,7 +56,7 @@ namespace Controllers
             return Ok(new { data = new { } });
         }
 
-        [HttpPost("{id:guid}/suspend")]
+        [HttpPost("suspend/{id:guid}")]
         public async Task<IActionResult> SuspendUser(Guid tenantId, Guid id)
         {
             var result = await _userService.SuspendUserAsync(tenantId, id);

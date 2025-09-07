@@ -10,9 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add DbContext and Identity
-// Register UserService and TenantService for DI
+// Register UserService, TenantService, and AuthService for DI
 builder.Services.AddScoped<Services.UserService>();
 builder.Services.AddScoped<Services.TenantService>();
+builder.Services.AddScoped<Services.AuthService>();
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<User, IdentityRole<Guid>>()

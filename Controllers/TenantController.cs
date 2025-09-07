@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Services;
 using DTOs;
 
-namespace Controllers
+namespace cks_kaas.Controllers
 {
     [ApiController]
     [Route("api/provider/tenants")]
@@ -18,14 +18,14 @@ namespace Controllers
             _tenantService = tenantService;
         }
 
-        [HttpGet]
+        [HttpGet("list")]
         public async Task<IActionResult> ListTenants([FromQuery] int page = 1, [FromQuery] int pageSize = 20, [FromQuery] string? search = null)
         {
             var (tenants, total) = await _tenantService.ListTenantsAsync(page, pageSize, search);
             return Ok(new { data = new { tenants, total, page, pageSize } });
         }
 
-        [HttpGet("{tenantId:guid}")]
+        [HttpGet("get/{tenantId:guid}")]
         public async Task<IActionResult> GetTenant(Guid tenantId)
         {
             var tenant = await _tenantService.GetTenantAsync(tenantId);
@@ -33,7 +33,7 @@ namespace Controllers
             return Ok(new { data = tenant });
         }
 
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateTenant([FromBody] CreateTenantDto dto)
         {
             var tenant = await _tenantService.CreateTenantAsync(dto);
