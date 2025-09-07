@@ -1,0 +1,27 @@
+# .NET build
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# VS Code
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# EF Core
+Migrations/*Designer.cs
+Migrations/*Snapshot.cs
+
+# Secrets
+appsettings.Development.json
+appsettings.json
+secrets.json
+.env
